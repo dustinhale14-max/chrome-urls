@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>He's dead, Jim!</title>
+    <style>
+        body {
+            background-color: #e5e5e5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .error-container {
+            background-color: #ffffff;
+            border: 1px solid #d8d8d8;
+            width: 100%;
+            max-width: 580px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .error-header {
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        /* Sad file icon container allowing custom sizing */
+        .error-icon {
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* You can change width and height to any dimensions you want! */
+        .error-icon img {
+            width: 58px;  
+            height: 66px; 
+            object-fit: contain;
+            display: block;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #222222;
+            font-weight: normal;
+            margin: 0 0 25px 0;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn {
+            font-size: 14px;
+            padding: 10px 24px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 1px;
+        }
+
+        .btn-reload {
+            background-color: #4285f4;
+            color: white;
+            border-color: #357ae8;
+        }
+
+        .btn-reload:hover {
+            background-color: #3273dc;
+        }
+
+        .error-details {
+            border-top: 1px solid #eeeeee;
+            padding: 30px 40px;
+            background-color: #fafafa;
+        }
+
+        .error-details p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #444444;
+            margin: 0 0 20px 0;
+        }
+
+        .error-details p:last-child {
+            margin-bottom: 0;
+        }
+
+        .error-details a {
+            color: #1a0dab;
+            text-decoration: none;
+        }
+
+        .error-details a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="error-container">
+        <div class="error-header">
+            <!-- Sad document icon using a PNG Data URL -->
+            <div class="error-icon">
+                <img src="data:image/png;base64,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" alt="Sad File Icon">
+            </div>
+            
+            <h1>He's dead, Jim!</h1>
+            
+            <div class="button-group">
+                <a href="#" class="btn btn-reload" onclick="location.reload(); return false;">Reload</a>
+            </div>
+        </div>
+
+        <div class="error-details">
+            <p>
+                Either Chrome ran out of memory or the process for the webpage was terminated for some other reason. To continue, reload or go to another page.
+            </p>
+            <p>
+                <a href="https://support.google.com/chrome/answer/6098869?hl=en&co=GENIE.Platform%3DAndroid">Learn more</a>
+               </p>
+<p>
+<a href="#">Send feedback to help improve Chrome</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>
