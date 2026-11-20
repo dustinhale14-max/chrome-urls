@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access to the file was denied</title>
+    <style>
+        body {
+            background-color: #e5e5e5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .error-container {
+            background-color: #ffffff;
+            border: 1px solid #d8d8d8;
+            width: 100%;
+            max-width: 580px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .error-header {
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        /* Sad file icon made using CSS or placeholder */
+        .error-icon {
+            width: 48px;
+            height: 56px;
+            margin: 0 auto 20px auto;
+            border: 3px solid #4a4a4a;
+            border-bottom: none;
+            position: relative;
+            background: #fff;
+        }
+        .error-icon::after {
+            content: "";
+            position: absolute;
+            right: -3px;
+            top: -3px;
+            width: 15px;
+            height: 15px;
+            background: #e5e5e5;
+            border-left: 3px solid #4a4a4a;
+            border-bottom: 3px solid #4a4a4a;
+        }
+        /* Frowning face representation inside icon */
+        .error-icon .face {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 10px;
+        }
+        .error-icon .eyes {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .error-icon .eye {
+            width: 3px;
+            height: 3px;
+            background-color: #4a4a4a;
+        }
+        .error-icon .mouth {
+            width: 16px;
+            height: 4px;
+            border-top: 3px solid #4a4a4a;
+            border-radius: 50% 50% 0 0;
+            margin: 4px auto 0 auto;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #222222;
+            font-weight: normal;
+            margin: 0 0 25px 0;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn {
+            font-size: 14px;
+            padding: 10px 24px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 1px;
+        }
+
+        .btn-reload {
+            background-color: #4285f4;
+            color: white;
+            border-color: #357ae8;
+        }
+
+        .btn-reload:hover {
+            background-color: #3273dc;
+        }
+
+        .btn-toggle {
+            background-color: #f8f8f8;
+            color: #333333;
+            border-color: #dcdcdc;
+            min-width: 80px;
+        }
+
+        .btn-toggle:hover {
+            background-color: #f0f0f0;
+            border-color: #c6c6c6;
+        }
+
+        .error-details {
+            border-top: 1px solid #eeeeee;
+            padding: 30px 40px;
+            background-color: #fafafa;
+            display: none; /* Hidden by default */
+        }
+
+        .error-details.visible {
+            display: block;
+        }
+
+        .error-details p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #444444;
+            margin: 0 0 25px 0;
+        }
+
+        .error-code {
+            font-size: 13px;
+            color: #333333;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="error-container">
+        <div class="error-header">
+            <!-- Sad document icon -->
+            <div class="error-icon">
+                <div class="face">
+                    <div class="eyes">
+                        <div class="eye"></div>
+                        <div class="eye"></div>
+                    </div>
+                    <div class="mouth"></div>
+                </div>
+            </div>
+            
+            <h1>Access to the file was denied</h1>
+            
+            <div class="button-group">
+                <a href="#" class="btn btn-reload" onclick="location.reload(); return false;">Reload</a>
+                <button id="toggleBtn" class="btn btn-toggle" onclick="toggleDetails()">More</button>
+            </div>
+        </div>
+
+        <div id="detailsSection" class="error-details">
+            <p>
+                The file at <b>file:///</b> is not readable. It may have been removed, moved, or file permissions may be preventing access.
+</p>
+            <div class="error-code">
+                Error code: ERR_ACCESS_DENIED
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDetails() {
+            const detailsSection = document.getElementById('detailsSection');
+            const toggleBtn = document.getElementById('toggleBtn');
+            
+            detailsSection.classList.toggle('visible');
+            
+            if (detailsSection.classList.contains('visible')) {
+                toggleBtn.textContent = 'Less';
+            } else {
+                toggleBtn.textContent = 'More';
+            }
+        }
+    </script>
+
+</body>
+</html>
