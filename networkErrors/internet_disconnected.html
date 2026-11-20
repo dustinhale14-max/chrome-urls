@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unable to connect to the Internet</title>
+    <style>
+        body {
+            background-color: #e5e5e5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .error-container {
+            background-color: #ffffff;
+            border: 1px solid #d8d8d8;
+            width: 100%;
+            max-width: 580px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .error-header {
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        /* Dinosaur icon container */
+        .error-icon {
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* You can adjust width and height here freely */
+        .error-icon img {
+            width: 56px;  
+            height: 48px; 
+            object-fit: contain;
+            display: block;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #222222;
+            font-weight: normal;
+            margin: 0 0 25px 0;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn {
+            font-size: 14px;
+            padding: 10px 24px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 1px;
+        }
+
+        .btn-reload {
+            background-color: #4285f4;
+            color: white;
+            border-color: #357ae8;
+        }
+
+        .btn-reload:hover {
+            background-color: #3273dc;
+        }
+
+        .btn-toggle {
+            background-color: #f8f8f8;
+            color: #333333;
+            border-color: #dcdcdc;
+            min-width: 80px;
+        }
+
+        .btn-toggle:hover {
+            background-color: #f0f0f0;
+            border-color: #c6c6c6;
+        }
+
+        .error-details {
+            border-top: 1px solid #eeeeee;
+            padding: 30px 40px;
+            background-color: #fafafa;
+            display: none; /* Hidden by default until "More" is clicked */
+        }
+
+        .error-details.visible {
+            display: block;
+        }
+
+        .error-details p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #444444;
+            margin: 0 0 25px 0;
+        }
+
+        .error-code {
+            font-size: 13px;
+            color: #333333;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="error-container">
+        <div class="error-header">
+            <!-- Offline Dinosaur icon using a PNG Data URL -->
+            <div class="error-icon">
+                <img src="data:image/png;base64,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" alt="Offline Dinosaur Icon">
+            </div>
+            
+            <h1>Unable to connect to the Internet</h1>
+            
+            <div class="button-group">
+                <a href="#" class="btn btn-reload" onclick="location.reload(); return false;">Reload</a>
+                <button id="toggleBtn" class="btn btn-toggle" onclick="toggleDetails()">More</button>
+            </div>
+        </div>
+
+        <div id="detailsSection" class="error-details">
+            <p>
+                Google Chrome can't display the webpage because your computer isn't connected to the Internet.
+            </p>
+<p>
+You can try to diagnose the problem by taking the following steps:<br>
+Go to <b>Start &gt; Control Panel &gt; Network and Internet &gt; Network and Sharing Center &gt; Troubleshooting Problems (at the bottom) &gt; Internet Connections</b>.
+</p>
+            <div class="error-code">
+                Error code: ERR_INTERNET_DISCONNECTED
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDetails() {
+            const detailsSection = document.getElementById('detailsSection');
+            const toggleBtn = document.getElementById('toggleBtn');
+            
+            detailsSection.classList.toggle('visible');
+            
+            if (detailsSection.classList.contains('visible')) {
+                toggleBtn.textContent = 'Less';
+            } else {
+                toggleBtn.textContent = 'More';
+            }
+        }
+    </script>
+
+</body>
+</html>
