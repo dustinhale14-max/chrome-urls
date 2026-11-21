@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security error</title>
+    <style>
+        body {
+            background-color: #b00000;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .error-container {
+            background-color: #ff0000;
+            border: 1px solid #e30000;
+            width: 100%;
+            max-width: 580px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .error-header {
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        /* Dinosaur icon container */
+        .error-icon {
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* You can adjust width and height here freely */
+        .error-icon img {
+            width: 56px;  
+            height: 48px; 
+            object-fit: contain;
+            display: block;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: white;
+            font-weight: normal;
+            margin: 0 0 25px 0;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn {
+            font-size: 14px;
+            padding: 10px 24px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 1px;
+        }
+
+        .btn-reload {
+            background-color: white;
+            color: #ff0000;
+            border-color: white;
+        }
+
+        .btn-toggle {
+            background-color: #ff0000;
+            color: white;
+            border-color: #ff0000;
+            min-width: 80px;
+        }
+
+        .error-details {
+            border-top: 1px solid #eeeeee;
+            padding: 30px 40px;
+            background-color: #ff0000;
+            display: none; /* Hidden by default until "More" is clicked */
+        }
+
+        .error-details.visible {
+            display: block;
+        }
+
+        .error-details p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: white;
+            margin: 0 0 25px 0;
+        }
+
+        .error-code {
+            font-size: 13px;
+            color: white;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="error-container">
+        <div class="error-header">
+            <!-- Offline Dinosaur icon using a PNG Data URL -->
+            <div class="error-icon">
+                <img src="data:image/png;base64,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" alt="Dangerous Icon">
+            </div>
+            
+            <h1>Dangerous site</h1>
+
+<p>About this warning recommends going back to safety, learn more about passwords, phone numbers or credit cards, they can chrome you into installing software or revealing things like your attackers you tried visiting as they might trick you.</p>
+            
+            <div class="button-group">
+                <a href="#" class="btn btn-reload" onclick="location.reload(); return false;">Back to safety</a>
+                <button id="toggleBtn" class="btn btn-toggle" onclick="toggleDetails()">More</button>
+            </div>
+        </div>
+
+        <div id="detailsSection" class="error-details">
+            <p>
+                Be other sites to trick you that you tried visiting. Phishing sites pretend to browsing, which recently <u>found phishing</u> on you while browsing – like Google Safe Chrome has built-in features to attack!
+            </p>
+<p>
+If you'd rather not pose a danger and think there's been a mistake, <u>let us know</u> if you think you've been stolen by attackers!
+</p>
+<p>
+While understanding the risks, only visit this unsafe site >:)
+</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleDetails() {
+            const detailsSection = document.getElementById('detailsSection');
+            const toggleBtn = document.getElementById('toggleBtn');
+            
+            detailsSection.classList.toggle('visible');
+            
+            if (detailsSection.classList.contains('visible')) {
+                toggleBtn.textContent = 'Less';
+            } else {
+                toggleBtn.textContent = 'More';
+            }
+        }
+    </script>
+
+</body>
+</html>
