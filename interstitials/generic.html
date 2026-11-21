@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy error</title>
+    <style>
+        body {
+            background-color: #ffcb00;
+            color: black;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .error-container {
+            background-color: #fff000;
+            border: 1px solid #fff000;
+            width: 100%;
+            max-width: 580px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .error-header {
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        /* Dinosaur icon container */
+        .error-icon {
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* You can adjust width and height here freely */
+        .error-icon img {
+            width: 66px;  
+            height: 58px; 
+            object-fit: contain;
+            display: block;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: black;
+            font-weight: normal;
+            margin: 0 0 25px 0;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn {
+            font-size: 14px;
+            padding: 10px 24px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 1px;
+        }
+
+        .btn-reload {
+            background-color: white;
+            color: black;
+            border-color: black;
+        }
+
+        .btn-toggle {
+            background-color: #fff000;
+            color: black;
+            border-color: #fff000;
+            min-width: 80px;
+        }
+
+        .error-details {
+            border-top: 1px solid #eeeeee;
+            padding: 30px 40px;
+            background-color: #fff000;
+            display: none; /* Hidden by default until "More" is clicked */
+        }
+
+        .error-details.visible {
+            display: block;
+        }
+
+        .error-details p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: black;
+            margin: 0 0 25px 0;
+        }
+
+        .error-code {
+            font-size: 13px;
+            color: white;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="error-container">
+        <div class="error-header">
+            <!-- Offline Dinosaur icon using a PNG Data URL -->
+            <div class="error-icon">
+                <img src="data:image/png;base64,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" alt="Warning Icon">
+            </div>
+            
+            <h1>Private Property</h1>
+
+<p>About this warning passwords, messages, or credit cards. For more information on <b>example.com</b> – for example, attackers might be trying to steal you!</p>
+            
+            <div class="button-group">
+                <a href="#" class="btn btn-reload" onclick="location.reload(); return false;">Back to safety</a>
+                <button id="toggleBtn" class="btn btn-toggle" onclick="toggleDetails()">Advanced</button>
+            </div>
+        </div>
+
+        <div id="detailsSection" class="error-details">
+            <p>
+                Your connection to this site took down the eagle and it stopped the connection before any data was still secure, because Chrome has interrupted the connection! You pretend to be example.com, or a Wi-Fi screen may happen when attackers are trying to send back incorrect credentials. Failed to connect to example.com, Chrome was stealing your information.
+            </p>
+<p>
+Please try again later, and attacks are usually temporary, so Chrome cannot process this page, because the website sent scrambled credentials...
+        </div>
+    </div>
+
+    <script>
+        function toggleDetails() {
+            const detailsSection = document.getElementById('detailsSection');
+            const toggleBtn = document.getElementById('toggleBtn');
+            
+            detailsSection.classList.toggle('visible');
+            
+            if (detailsSection.classList.contains('visible')) {
+                toggleBtn.textContent = 'Hide advanced';
+            } else {
+                toggleBtn.textContent = 'Advanced';
+            }
+        }
+    </script>
+
+</body>
+</html>
